@@ -2902,6 +2902,66 @@ node.parentNode;
 
 
 
+# NOTE 1
+
+- Elements list is read-only. You Can't just change element using "childNodes[i] = ..."
+- The HTMLCollection interface represents a generic collection (array-like object similar to arguments) of elements (in document order) and offers methods and properties for selecting from the list.
+
+<pre class="brush: jscript">
+var elems = document.documentElement.childNodes;
+elems.forEach(function(elem) { // Doesn't Exist!
+   alert( elem );
+});
+</pre>
+- To iterate through collection You can use:
+<pre class="brush: jscript">
+for(var i=0; i < elems.length; i++){...}
+</pre>
+- Apply forEach method using call/apply:
+<pre class="brush: jscript">
+var elems = document.documentElement.childNodes;
+[].forEach.call(elems, function(elem) {
+alert( elem );
+});
+</pre>
+- Use  Array.prototype.slice:
+<pre class="brush: jscript">
+var elems = document.documentElement.childNodes;
+elems = Array.prototype.slice.call(elems); // elems is now array
+elems.forEach(function(elem) {
+alert( elem.tagName );
+});
+});
+</pre>
+
+
+---
+
+
+
+# NOTE 2
+
+- Do not Use for..in to iterate through collection!
+
+<pre class="brush: jscript">
+var elems = document.documentElement.childNodes;
+for (var key in elems) {
+  alert( key );
+}
+</pre>
+
+To navigate through elements only, use:
+- children,
+- firstElementChild, lastElementChild,
+- previousElementSibling, nextElementSibling
+- parentElement
+
+
+
+---
+
+
+
 # DOM
 
 Creating New Nodes
